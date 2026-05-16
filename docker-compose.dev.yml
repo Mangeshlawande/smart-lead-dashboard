@@ -1,0 +1,18 @@
+version: '3.9'
+
+# Development override — runs only MongoDB so you can run
+# the backend and frontend locally via `npm run dev`
+services:
+  mongo:
+    image: mongo:7
+    container_name: smart-leads-mongo-dev
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: smart-leads-dev
+    volumes:
+      - mongo_dev_data:/data/db
+
+volumes:
+  mongo_dev_data:

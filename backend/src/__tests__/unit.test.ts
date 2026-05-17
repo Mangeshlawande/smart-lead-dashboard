@@ -112,7 +112,7 @@ describe('createLeadSchema', () => {
   });
 
   it('rejects missing source', () => {
-    const { body: { source: _s, ...rest } } = validLead;
+    const { body: {  ...rest } } = validLead;
     const result = createLeadSchema.safeParse({ body: rest });
     expect(result.success).toBe(false);
   });

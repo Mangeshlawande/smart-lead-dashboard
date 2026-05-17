@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Pencil, Trash2, ChevronUp, ChevronDown, Eye } from 'lucide-react';
 import { Lead } from '@/types';
 import { StatusBadge, PriorityBadge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
 import { formatCurrency, formatDate, getInitials } from '@/utils';
 import { cn } from '@/utils';
 
@@ -17,7 +16,7 @@ interface LeadTableProps {
   onSort: (field: string) => void;
 }
 
-const SortIcon = ({ field, active, order }: { field: string; active: boolean; order?: 'asc' | 'desc' }) => (
+const SortIcon = ({  active, order }: { field: string; active: boolean; order?: 'asc' | 'desc' }) => (
   <span className="ml-1 inline-flex flex-col">
     <ChevronUp size={10} className={cn(active && order === 'asc' ? 'text-brand-400' : 'text-slate-600')} />
     <ChevronDown size={10} className={cn(active && order === 'desc' ? 'text-brand-400' : 'text-slate-600')} />

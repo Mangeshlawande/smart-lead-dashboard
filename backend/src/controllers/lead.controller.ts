@@ -57,8 +57,8 @@ export const exportLeads = asyncHandler(async (req: AuthenticatedRequest, res: R
     l.source,
     l.priority,
     l.value ?? '',
-    (l.assignedTo as any)?.name ?? '',
-    (l.createdBy as any)?.name ?? '',
+    (l.assignedTo as { name?: string })?.name ?? '',
+    (l.createdBy as { name?: string })?.name ?? '',
     new Date(l.createdAt).toISOString(),
     new Date(l.updatedAt).toISOString(),
   ]);

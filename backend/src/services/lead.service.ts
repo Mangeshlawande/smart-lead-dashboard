@@ -4,7 +4,6 @@ import { AppError } from '../utils/errors';
 import { ILeadDocument, LeadFilterQuery, PaginatedResponse } from '../types';
 import { CreateLeadInput, UpdateLeadInput } from '../validators/schemas';
 
-const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 10;
 const MAX_LIMIT = 100;
 

@@ -38,7 +38,7 @@ export default function LeadsPage() {
 
   useEffect(() => {
     fetchLeadsRef.current(filters);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [filters]);
 
   const handleSort = useCallback(
@@ -76,7 +76,7 @@ export default function LeadsPage() {
     setIsExporting(true);
     try {
       // Pass current active filters (excluding page/limit) to export all matching leads
-      const { page: _page, limit: _limit, ...exportFilters } = filters;
+      const { ...exportFilters } = filters;
       const response = await leadsApi.exportLeads(exportFilters);
       const blob = new Blob([response.data as BlobPart], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);

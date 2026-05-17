@@ -7,8 +7,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint src --ext .ts --fix",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "format": "prettier --write src/**/*.ts",
     "test": "jest --runInBand",
     "test:watch": "jest --watch",
@@ -51,20 +51,29 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.2",
     "tsx": "^4.16.0",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "roots": ["<rootDir>/src"],
-    "testMatch": ["**/__tests__/**/*.test.ts"],
-    "setupFiles": ["<rootDir>/src/__tests__/setup.ts"],
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ],
+    "setupFiles": [
+      "<rootDir>/src/__tests__/setup.ts"
+    ],
     "collectCoverageFrom": [
       "src/**/*.ts",
       "!src/**/__tests__/**",
       "!src/index.ts"
     ],
-    "coverageReporters": ["text", "lcov"],
+    "coverageReporters": [
+      "text",
+      "lcov"
+    ],
     "testTimeout": 30000
   }
 }

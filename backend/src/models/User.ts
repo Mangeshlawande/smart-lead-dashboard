@@ -40,14 +40,15 @@ const userSchema = new Schema<IUserDocument>(
     },
   },
   {
-    timestamps: true,
-    toJSON: {
-      transform: (_doc, ret) => {
-        delete ret.password;
-        return ret;
-      },
+  timestamps: true,
+  toJSON: {
+    transform: (_doc, ret) => {
+      const { password, ...safeRet } = ret;
+      return safeRet;
     },
-  }
+  },
+}
+
 );
 
 userSchema.index({ email: 1 });

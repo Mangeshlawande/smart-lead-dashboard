@@ -6,26 +6,33 @@ import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import { config } from './config/env';
+import { corsOptions } from './config/cors';
 import authRoutes from './routes/auth.routes';
 import leadRoutes from './routes/lead.routes';
+import healthRoutes from './routes/health.routes';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { logger } from './utils/logger';
 
 export const createApp = (): Application => {
   const app = express();
 
-  // Security
-  app.use(helmet());
-  app.use(mongoSanitize());
+  // ── Trust Render / Vercel / any reverse proxy so req.ip is correct ──
+  app.set('trust proxy', 1);
+
+  // ── Security headers ────────────────────────────────────────────────
   app.use(
-    cors({
-      origin: config.frontendUrl,
-      credentials: true,
-      methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+    helmet({
+      crossOriginResourcePolicy: { policy: 'cross-origin' }, // allow CSV downloads
+      contentSecurityPolicy: config.isProd,                  // CSP only in prod
     })
   );
+  app.use(mongoSanitize());
 
-  // Rate limiting
+  // ── CORS — production-safe, env-driven ─────────────────────────────
+  app.use(cors(corsOptions));
+  app.options('*', cors(corsOptions)); // explicit preflight for all routes
+
+  // ── Rate limiting ───────────────────────────────────────────────────
   app.use(
     '/api',
     rateLimit({
@@ -33,16 +40,19 @@ export const createApp = (): Application => {
       max: config.rateLimit.max,
       standardHeaders: true,
       legacyHeaders: false,
-      message: { success: false, message: 'Too many requests, please try again later' },
+      // Use X-Forwarded-For via trust proxy setting above
+      keyGenerator: (req) => req.ip ?? 'unknown',
+      message: { success: false, message: 'Too many requests, please try again later.' },
+      skip: (req) => req.path === '/health',
     })
   );
 
-  // Body parsing & compression
+  // ── Body parsing & compression ──────────────────────────────────────
   app.use(express.json({ limit: '10kb' }));
   app.use(express.urlencoded({ extended: true, limit: '10kb' }));
   app.use(compression());
 
-  // Logging
+  // ── Request logging ─────────────────────────────────────────────────
   if (config.isDev) {
     app.use(morgan('dev'));
   } else {
@@ -53,16 +63,12 @@ export const createApp = (): Application => {
     );
   }
 
-  // Health check
-  app.get('/health', (_req, res) => {
-    res.json({ status: 'ok', env: config.env, timestamp: new Date().toISOString() });
-  });
-
-  // API routes
+  // ── Routes ──────────────────────────────────────────────────────────
+  app.use('/health', healthRoutes);          // Render health check
   app.use('/api/v1/auth', authRoutes);
   app.use('/api/v1/leads', leadRoutes);
 
-  // Error handling
+  // ── Error handling ──────────────────────────────────────────────────
   app.use(notFoundHandler);
   app.use(errorHandler);
 

@@ -112,10 +112,14 @@ describe('createLeadSchema', () => {
   });
 
   it('rejects missing source', () => {
-    const { body: {  ...rest } } = validLead;
-    const result = createLeadSchema.safeParse({ body: rest });
-    expect(result.success).toBe(false);
+  const { source, ...rest } = validLead.body;
+
+  const result = createLeadSchema.safeParse({
+    body: rest,
   });
+
+  expect(result.success).toBe(false);
+});
 
   it('rejects invalid source enum', () => {
     const result = createLeadSchema.safeParse({ body: { ...validLead.body, source: 'fax_machine' } });

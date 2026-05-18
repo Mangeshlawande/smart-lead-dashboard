@@ -55,7 +55,7 @@ describe('Auth Routes', () => {
     });
 
     it('should fail when name is missing', async () => {
-      const {  ...noName } = validUser;
+      const { name, ...noName } = validUser;
       const res = await request(app).post('/api/v1/auth/register').send(noName);
       expect(res.status).toBe(422);
     });

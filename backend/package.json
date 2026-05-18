@@ -62,7 +62,7 @@
     "testMatch": [
       "**/__tests__/**/*.test.ts"
     ],
-    "setupFiles": [
+    "setupFilesAfterEnv": [
       "<rootDir>/src/__tests__/setup.ts"
     ],
     "collectCoverageFrom": [

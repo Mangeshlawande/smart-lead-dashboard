@@ -389,6 +389,16 @@ Quick summary of endpoints:
 
 ---
 
-## 📄 License
+## Live URL Link: 
+The application is deployed and can be accessed at: [smart-lead-dashboard-one.vercel.app](https://smart-lead-dashboard-one.vercel.app/login)
 
-MIT — see [LICENSE](LICENSE) for details.
+
+## Deployment Note
+
+This project uses `NODE_ENV=development` on Render because
+TypeScript build tooling and typings are required during deployment.
+
+In a production-grade setup:
+- CI builds compiled JS artifacts
+- runtime uses production-only dependencies
+- Docker multi-stage builds are preferred

@@ -63,6 +63,15 @@ export const createApp = (): Application => {
     );
   }
 
+  app.get("/", (_req, res) => {
+  res.status(200).json({
+    success: true,
+    service: "Smart Leads Dashboard API",
+    version: "1.0.0",
+    status: "healthy"
+  });
+});
+
   // ── Routes ──────────────────────────────────────────────────────────
   app.use('/health', healthRoutes);          // Render health check
   app.use('/api/v1/auth', authRoutes);

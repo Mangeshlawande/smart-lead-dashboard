@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import { config } from './config/env';
-import { corsOptions } from './config/cors';
+// import { corsOptions } from './config/cors';
 import authRoutes from './routes/auth.routes';
 import leadRoutes from './routes/lead.routes';
 import healthRoutes from './routes/health.routes';

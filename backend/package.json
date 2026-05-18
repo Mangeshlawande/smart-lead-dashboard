@@ -52,28 +52,5 @@
     "ts-jest": "^29.4.9",
     "tsx": "^4.16.0",
     "typescript": "^5.5.4"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "testMatch": [
-      "**/__tests__/**/*.test.ts"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/__tests__/setup.ts"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.ts",
-      "!src/**/__tests__/**",
-      "!src/index.ts"
-    ],
-    "coverageReporters": [
-      "text",
-      "lcov"
-    ],
-    "testTimeout": 30000
   }
 }

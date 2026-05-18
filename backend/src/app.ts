@@ -29,8 +29,11 @@ export const createApp = (): Application => {
   app.use(mongoSanitize());
 
   // ── CORS — production-safe, env-driven ─────────────────────────────
-  app.use(cors(corsOptions));
-  app.options('*', cors(corsOptions)); // explicit preflight for all routes
+  // app.use(cors(corsOptions));
+  // app.options('*', cors(corsOptions)); // explicit preflight for all routes
+  app.use(cors({
+  origin: "*"
+}));
 
   // ── Rate limiting ───────────────────────────────────────────────────
   app.use(
